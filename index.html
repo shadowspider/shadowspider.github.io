@@ -1,30 +1,107 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script>
-      function onFetchIIDClick() {
-        if (mm && mm.fetchIIDToken) {
-          mm.fetchIIDToken('745476177629');
-        } else if (window.mm && window.mm.fetchIIDToken) {
-          window.mm.fetchIIDToken('745476177629');
-        } else {
-          console.log("mm not defined");
-        }
+  	  <!-- Compiled and minified CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+      <!-- Compiled and minified JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+  	<style>
+      body {
+        background-color: linen;
       }
 
+      .first-button {
+        margin-top: 50px;
+      }
+    </style>
+    <script>
+      var mock_mm = function() {
+      };
+      mock_mm.fetchIIDToken = function(project_id) {
+      	window.setIIDToken('fake_token');
+      }
+      mock_mm.fetchVerifiedPhoneNumber = function(param) {
+      	var phoneNumberInfos = [];
+      	phoneNumberInfos.push({number: '-1', verificationTime: -1, data: {}});
+      	window.onFetchPhoneNumberInfo(0, phoneNumberInfos);
+      };
+      mock_mm.getAndroidId = function() {
+      	return -1;
+      }
+
+      function getJsBridge() {
+      	if (window.mm) {
+      	  return window.mm;
+      	} else if (mm) {
+      	  return mm;
+      	}
+      	return mock_mm;
+      }
+
+      function onFetchIIDClick() {
+      	var jsbridge = getJsBridge();
+        jsbridge.fetchIIDToken('745476177629');
+      }
+
+      function onFetchVerifiedPhoneNumberClick() {
+      	var jsbridge = getJsBridge();
+        jsbridge.fetchVerifiedPhoneNumber('');
+      }
+      
+      function onFetchAndroidIdClick() {
+      	var jsbridge = getJsBridge();
+        var androidId = jsbridge.getAndroidId();
+        document.getElementById("android_id").innerHTML = androidId;
+      }
+      
       function setIIDToken(token) {
-        document.getElementById("iid").innerHTML = "Fetched IID: " + token;
+        document.getElementById("iid").innerHTML = token;
+      }
+      
+      function onFetchPhoneNumberInfo(statusCode, phoneNunberInfos) {
+        var result = "Status code: " + statusCode;
+        result += "<br/><br/>";
+        result += "PhoneNumberInfos:<br/>" + (!!phoneNunberInfos ? JSON.stringify(phoneNunberInfos) : null);
+        document.getElementById("phone_verification").innerHTML = result;        
       }
     </script>
   </head>
 
 <body>
-  <h2>Test page</h2>
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo center">Javascript Bridge Test page</a>
+    </div>
+  </nav>  
 
-  <button type="button" onclick="onFetchIIDClick()">Fetch IID</button>
-
-  <div>
-    <span id="iid">Fetched IID</span>
+  <button type="button" onclick="onFetchIIDClick()" class="waves-effect waves-light btn first-button">Fetch IID</button>
+  <div class="row">
+    <div class="col s12 m5">
+      <div class="card-panel white">
+        <span id="iid"></span>
+      </div>
+    </div>
   </div>
+
+  <button type="button" onclick="onFetchVerifiedPhoneNumberClick()" class="waves-effect waves-light btn">Fetch Verified Phone Number</button>
+  <div class="row">
+    <div class="col s12 m5">
+      <div class="card-panel white">
+        <span id="phone_verification"></span>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" onclick="onFetchAndroidIdClick()" class="waves-effect waves-light btn">Fetch Android ID</button>
+  <div class="row">
+    <div class="col s12 m5">
+      <div class="card-panel white">
+        <span id="android_id"></span>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html> 
