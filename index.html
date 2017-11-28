@@ -1,1 +1,24 @@
-Hello world
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      function onFetchIIDClick() {
+        window.mm.fetchIIDToken('745476177629');
+      }
+
+      function setIIDToken(token) {
+        document.getElementById("iid").innerHTML = "Fetched IID: " + token;
+      }
+    </script>
+  </head>
+
+<body>
+  <h2>Test page</h2>
+
+  <button type="button" onclick="onFetchIIDClick()">Fetch IID</button>
+
+  <div>
+    <span id="iid">Fetched IID</span>
+  </div>
+</body>
+</html> 
