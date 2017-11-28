@@ -2,12 +2,11 @@
 <html>
   <head>
     <script>
-      window.mm;
-      var mm = window.mm;
-      
       function onFetchIIDClick() {
-        if (window.mm && mm.fetchIIDToken) {
+        if (mm && mm.fetchIIDToken) {
           mm.fetchIIDToken('745476177629');
+        } else if (window.mm && window.mm.fetchIIDToken) {
+          window.mm.fetchIIDToken('745476177629');
         } else {
           console.log("mm not defined");
         }
