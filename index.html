@@ -2,8 +2,15 @@
 <html>
   <head>
     <script>
+      window.mm;
+      var mm = window.mm;
+      
       function onFetchIIDClick() {
-        window.mm.fetchIIDToken('745476177629');
+        if (window.mm && mm.fetchIIDToken) {
+          mm.fetchIIDToken('745476177629');
+        } else {
+          consolse.log("mm not defined");
+        }
       }
 
       function setIIDToken(token) {
