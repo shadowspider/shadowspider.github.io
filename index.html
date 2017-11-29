@@ -13,6 +13,10 @@
       .first-button {
         margin-top: 50px;
       }
+      
+      .wrap-text {
+        overflow-wrap: break-word;
+      }
     </style>
     <script>
       var mock_mm = function() {
@@ -47,7 +51,8 @@
       	var jsbridge = getJsBridge();
         var androidId = jsbridge.getAndroidId();
         androidId = !!androidId ? androidId : -1;
-        document.getElementById("android_id").innerHTML = "Hex: 0x" + androidId + "<br/>Decimal: " + parseInt(androidId, 16);
+        document.getElementById("android_id").innerHTML =
+            "Hex: 0x" + androidId + "<br/>Decimal: " + parseInt(androidId, 16);
       }
       
       function setIIDToken(token) {
@@ -70,29 +75,35 @@
     </div>
   </nav>  
 
-  <button type="button" onclick="onFetchIIDClick()" class="waves-effect waves-light btn first-button">Fetch IID</button>
+  <button type="button"
+          onclick="onFetchIIDClick()"
+          class="waves-effect waves-light btn first-button">Fetch IID</button>
   <div class="row">
     <div class="col s12 m5">
       <div class="card-panel white">
-        <span id="iid"></span>
+        <span id="iid" class="wrap-text"></span>
       </div>
     </div>
   </div>
 
-  <button type="button" onclick="onFetchVerifiedPhoneNumberClick()" class="waves-effect waves-light btn">Fetch Verified Phone Number</button>
+  <button type="button"
+          onclick="onFetchVerifiedPhoneNumberClick()"
+          class="waves-effect waves-light btn">Fetch Verified Phone Number</button>
   <div class="row">
     <div class="col s12 m5">
       <div class="card-panel white">
-        <span id="phone_verification"></span>
+        <span id="phone_verification" class="wrap-text"></span>
       </div>
     </div>
   </div>
 
-  <button type="button" onclick="onFetchAndroidIdClick()" class="waves-effect waves-light btn">Fetch Android ID</button>
+  <button type="button"
+          onclick="onFetchAndroidIdClick()"
+          class="waves-effect waves-light btn">Fetch Android ID</button>
   <div class="row">
     <div class="col s12 m5">
       <div class="card-panel white">
-        <span id="android_id"></span>
+        <span id="android_id" class="wrap-text"></span>
       </div>
     </div>
   </div>
