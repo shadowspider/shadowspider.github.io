@@ -46,7 +46,8 @@
       function onFetchAndroidIdClick() {
       	var jsbridge = getJsBridge();
         var androidId = jsbridge.getAndroidId();
-        document.getElementById("android_id").innerHTML = androidId;
+        androidId = !!androidId ? androidId : -1;
+        document.getElementById("android_id").innerHTML = "Hex: 0x" + androidId + "<br/>Decimal: " + parseInt(androidId, 16);
       }
       
       function setIIDToken(token) {
